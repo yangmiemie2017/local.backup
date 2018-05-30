@@ -1,0 +1,110 @@
+<style>
+    @media (min-width: 100px) and (max-width: 495px) {
+        .rightHeader {
+            float: right;
+            margin-bottom: 0px;
+        }
+    }
+
+    @media (min-width: 495px) and (max-width: 1920px) {
+        .rightHeader {
+            float: right;
+            margin-right: 390px;
+            margin-bottom: 0px;
+        }
+    }
+</style>
+<div ng-controller="headerCtrl as header">
+    <div ng-if="header.showHeader">
+        <div>
+            <img src="../Images/lighthouse.jpg" alt="a" class="header">
+            <h4 class="header">New Application</h4>
+        </div>
+        <div class="pull-right">            
+            <p class="header pull-right">
+                <a ui-sref="logout">Logout</a>
+                <span class="separator">|</span>
+                <a ui-sref="help" target="_blank">Help</a>
+                <span class="separator">|</span>
+                <a href="Scripts/spa/contacts/contacts.html" target="_blank">Contacts</a>
+            </p>
+        </div>
+        <div>
+            <!-- path -->
+            <div class="divWidth">
+                <h4 class="rightHeader">
+                    {{}}  {{}}
+                </h4>
+                <ncy-breadcrumb></ncy-breadcrumb> 
+            </div>
+            <nav role="navigation" class="navbar navbar-default header_fixed_height">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <!-- Collection of nav links and other content for toggling -->
+                <div id="navbarCollapse" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav" style="position:static;">
+                        <li class="dropdown" ng-repeat="tab in header.tabs" ng-class="{true: 'open', false: ''}[tab.needShowSub]" ng-mouseover="header.enterSubMenu(tab)" ng-mouseleave="header.leaveSubMenu()" ng-show="tab.display === null || tab.display === true">
+                            <a data-toggle="dropdown" ng-class="{true: 'barIsActive', false: ''}[tab.activeTab]" class="dropdown-toggle" ng-click="header.enter(tab)" href="#" ng-bind="tab.title"></a>
+                            <ul role="menu" class="dropdown-menu" ng-show="tab.subNav">
+                                <li ng-repeat="subtab in tab.subNav" class="dropdown-submenu" ng-class="{'active': header.subTabActive(subtab)}">
+                                    <a ng-click="header.enter(subtab)" ng-show="!subtab.subNav && !subtab.length && subtab.display === null || subtab.display === true" ng-bind="subtab.title"></a>
+                                    <ul class="dropdown-menu" ng-show="subtab.subNav">
+                                        <li ng-repeat="subtab2 in subtab.subNav">
+                                            <a ng-click="header.enter(subtab2)" ng-show="!subtab2.length && subtab2.display === null || subtab2.display === true" ng-bind="subtab2.title"></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<style>
+    /*#navbarCollapse .dropdown-menu > li > a:hover + .dropdown-menu,
+    #navbarCollapse .dropdown-menu > li > .dropdown-menu:hover {
+        display: block;
+        position: relative;
+        margin: 0px;
+        width: 100% !important;
+        border-radius: 0px;
+        min-width:330px;
+    }
+
+    .dropdown-menu > li > .dropdown-menu > li > a {
+        padding-left: 30px;
+    }
+*/ 
+    .dropdown-menu{
+        overflow:visible!important;
+    }
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: 0px;
+        -webkit-border-radius: 0 6px 6px 0px;
+        -moz-border-radius: 0 6px 6px 0px;
+        border-radius: 0 6px 6px 0px;
+     }
+
+     .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+     }
+
+
+</style>

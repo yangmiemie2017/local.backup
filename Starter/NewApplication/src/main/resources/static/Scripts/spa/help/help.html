@@ -1,0 +1,30 @@
+﻿<div ng-controller="helpCtrl as help">
+    <script type="text/ng-template" id="nodes_renderer.html">
+        <div data-nodrag class="tree-node tree-node-content" ng-class="{'div-help-active': node.active,'div-help-deactive': !node.active}">
+            <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="toggle(this)">
+                <span class="glyphicon" ng-class="{'glyphicon-plus-sign': collapsed,'glyphicon-minus-sign': !collapsed}"></span>
+            </a>
+            <a ng-click="help.openContent(node)" class="link-help" ng-class="{'link-help-with-sub': node.nodes && node.nodes.length > 0,'link-help-no-sub': node.nodes == null || node.nodes.length == 0}">{{node.title}}</a>
+        </div>
+        <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+            <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+        </ol>
+    </script>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="">
+                <button ng-click="help.expandAll()" class="btn btn-info smallBtn btn-tree">Expand all</button>
+                <button ng-click="help.collapseAll()" class="btn btn-info smallBtn btn-tree">Collapse all</button>
+            </div>
+
+            <div ui-tree id="tree-root">
+                <ol ui-tree-nodes ng-model="help.data">
+                    <li ng-repeat="node in help.data" data-nodrag ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                </ol>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div ng-include="help.GetUrl(help.page)"></div>
+        </div>
+    </div>
+</div>

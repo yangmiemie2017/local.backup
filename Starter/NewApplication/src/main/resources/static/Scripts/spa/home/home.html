@@ -1,0 +1,24 @@
+<div ng-controller="homeCtrl as home" data-ng-init="home.getData()" class="form-horizontal">
+    <style type="text/css">       
+         h5 {
+             font-weight:bold;
+        }
+    </style>
+    <div class="my-alert" style="color:blue; font-weight:bolder; font-size:15px;">Welcome!</div>   
+    <div ng-hide="home.books.length == 0">
+        <table id="action" style="width:98%" class="table table-bordered table-bottom table-user-emails">
+            <tr class="active" style="height:50px">
+                <th style="vertical-align:middle;">Book id</th>
+                <th style="vertical-align:middle;">Book name</th>
+                <th style="vertical-align:middle;">Book topic</th>
+                <th style="vertical-align:middle;">Book price</th>
+            </tr>
+            <tr ng-repeat="book in home.books">
+                <td>{{book.id}}</td>
+                <td>{{book.name}}</td>
+                <td>{{book.topic}}</td>
+                <td>{{book.price}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

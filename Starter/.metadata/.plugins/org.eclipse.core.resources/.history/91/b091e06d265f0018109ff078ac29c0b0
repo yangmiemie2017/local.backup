@@ -1,0 +1,10 @@
+package com.strong.web.menu;
+
+import java.io.IOException;
+import java.io.InputStream;  
+
+public class MenuSetingHelper {
+	static {
+		InputStream is=Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties");
+	}
+}

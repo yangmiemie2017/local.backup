@@ -1,0 +1,144 @@
+package com.strong.web.controller;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.strong.constant.ErrorCodes;
+import com.strong.model.dto.PaginatedResult;
+import com.strong.model.entity.Menu;
+import com.strong.model.entity.User;
+import com.strong.model.entity.UserToken;
+import com.strong.exception.BusinessException;
+import com.strong.exception.ErrorDetail;
+import com.strong.exception.InputValidationException;
+import com.strong.exception.ServiceException;
+import com.strong.service.LoginServiceImpl;
+import com.strong.service.RegisterService;
+import com.strong.util.CheckPwdStrengthUtil;
+import com.strong.util.*;
+import com.strong.web.model.RegisterRequest;
+import com.strong.web.menu.MenuSettingHelper;
+import com.strong.web.model.LoginResponse;
+import com.strong.common.Data;
+
+@RestController
+public class MenuController {
+	private static Logger logger = LoggerFactory.getLogger(MenuController.class);
+
+    @RequestMapping(value = "/menu", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<?> logoffAction() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserToken token = (UserToken) authentication.getPrincipal();
+        
+        Menu[] menus=MenuSettingHelper.getMenu();
+        
+        updateMenuAccess(menus, token.getUser());
+        
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(menus);
+    }
+    
+    private static void updateMenuAccess(Menu[] menus, User user)
+    {
+        int displaySubMenuCount = 0, lvl3MenuCount = 0;
+
+            List<String> accessMenu =user.getUserAccessesList();
+            for(Menu menu :menus)
+            {
+                menu.setDisplay(accessMenu.contains(menu.getMenuCode()));
+                
+                if (null!=menu.getSubNav() )
+                {
+                    // if sub menu will display, then the parent menu will also display.
+                    displaySubMenuCount = 0;
+                    foreach (var subMenu in menu.subNav)
+                    {
+                        subMenu.Display = accessMenu.Any(m => m.Equals(subMenu.MenuCode, StringComparison.OrdinalIgnoreCase));
+                        if (subMenu.subNav != null)
+                        {
+                            lvl3MenuCount = 0;
+                            foreach (var subsubmenu in subMenu.subNav)
+                            {
+                                subsubmenu.Display = accessMenu.Any(m => m.Equals(subsubmenu.MenuCode, StringComparison.OrdinalIgnoreCase));
+                                if (subsubmenu.Display == true)
+                                {
+                                    lvl3MenuCount++;
+                                }
+                            }
+                            subMenu.Display = lvl3MenuCount > 0;
+                        }
+                        if (subMenu.Display == true)
+                        {
+                            displaySubMenuCount++;
+                        }
+                    }
+
+                    menu.Display = displaySubMenuCount > 0;
+
+                    if (displaySubMenuCount > 0)
+                    {
+                        // set the parent menu route to its first visible child menu route
+                        var firstDiplayedSubMenu = menu.subNav.FirstOrDefault(m => m.Display == true);
+                        if (firstDiplayedSubMenu != null)
+                        {
+                            // if parent menu route is set for specific sub menu route and it is visible, then skip setting the parent route again.
+                            if (!menu.subNav.Any(m=>m.Display == true && m.Route.Equals(menu.Route,StringComparison.OrdinalIgnoreCase)))
+                            {
+                                menu.Route = firstDiplayedSubMenu.Route;
+                            }
+                            
+                        }
+                    }
+
+                }
+
+                if (menu.Route.Equals("home",StringComparison.OrdinalIgnoreCase))
+                {
+                    menu.Display = true;
+                }
+            }
+      
+    }	
+    
+	private int setMenuDisplay(Menu[] menus, List<String> access) {
+		int displayMenuCount = 0;
+		for (Menu menu : menus) {
+			menu.setDisplay(access.contains(menu.getMenuCode()));
+			displayMenuCount++;
+			Menu[] sub = menu.getSubNav();
+			if (null != sub) {
+				// if sub menu will display, then the parent menu will also	display.
+				if(setMenuDisplay(sub, access)>0){
+					menu.setDisplay(true);
+				}					
+			}
+		}
+		return displayMenuCount;
+	}
+}

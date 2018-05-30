@@ -1,0 +1,84 @@
+<div class="container-fluid" ng-controller="registCtrl as regist">
+	<div class="form-group login-icon">
+		<img src="../images/desert.jpg">
+	</div>
+	<div class="regist-title">
+		<p class="getStarted">Get started with a free account</p>
+		<p>Sign up in a minute. No credit card required.</p>
+	</div>
+	<div class="registLayout">
+		<div class=" col-xs-12 col-sm-4 loginFormBG">
+			<form name="registForm" novalidate>
+				<div class="col-sm-12" ng-if="errorData"
+					ng-repeat="error in errorData | filter: {field : '_ErrorSummary'}">
+					<div class="row alert alert-warning">{{ error.message }}</div>
+				</div>
+
+				<div class="form-group">
+					<label for="userID"><span style="color: red">*</span>User
+						ID:</label> <input type="text" ng-model="regist.formData.userName"
+						class="form-control" id="userID" name="user"
+						placeholder="Enter User ID" required> <span
+						class="registInfoMessage"
+						ng-show="(registForm.user.$invalid && registForm.user.$touched) || (registForm.user.$invalid && registForm.$submitted)  ">*
+						Without User Name ?</span>
+				</div>
+				<div class="form-group">
+					<label for="password"><span style="color: red">*</span>Password:</label>
+					<input type="password" ng-model="regist.formData.password"
+						class="form-control" id="password" name="pwd" ng-minlength="4"
+						maxlength="16" ng-blur="passwordInfoMessage = false"
+						ng-focus="passwordInfoMessage = true"
+						ng-keyup="validPassStrength(formData.password)" 
+						placeholder="Enter password" required> <span
+						class="registInfoMessage"
+						ng-show="(registForm.pwd.$invalid  && registForm.pwd.$touched)||(registForm.pwd.$invalid && registForm.$submitted) ">*
+						Try one with at least 4 characters.</span>
+				</div>
+				<div class="form-group">
+					<label for="confirmPassword"> <span style="color: red">*</span>Confirm
+						Password:
+					</label> <input type="password" ng-model="regist.registForm.confirmPassword"
+						name="confirmpwd" class="form-control" id="confirmPassword"
+						placeholder="Confirm password"> <span
+						class="registInfoMessage"
+						ng-show="(registForm.confirmPassword != formData.password) && registForm.confirmpwd.$touched">
+						* These passwords don't match. Try again? </span>
+				</div>
+				<div class="form-group">
+					<label for="emaiil"><span style="color: red">*</span>Email:</label>
+					<input type="email" ng-model="regist.formData.email" class="form-control"
+						id="email" name="mail" placeholder="Enter Email" required>
+					<span class="registInfoMessage"
+						ng-show="(registForm.mail.$invalid &&registForm.mail.$touched) || (registForm.mail.$invalid && registForm.$submitted)">
+						* Please check your Email ! </span>
+				</div>
+
+				<div class="form-group">
+					<label for="gender">Gender:</label>
+					<div id="gender" class="form-control">
+						<label class="radio-inline"><input type="radio"
+							ng-model="regist.formData.gender" value="male" name="optradio">Male</label>
+						<label class="radio-inline"><input type="radio"
+							ng-model="regist.formData.gender" value="female" name="optradio">Female</label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="describe">Personalized signature:</label>
+					<textarea class="form-control" rows="3" id="describe"
+						ng-model="regist.formData.signature" style="resize: none"></textarea>
+				</div>
+				<div class="form-group">				
+					<button type="submit" class=" btn btn-block" ng-disabled="registForm.user.$invalid || registForm.pwd.$invalid" ng-click="regist.userRegister()">Register</button>
+				</div>			
+			</form>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-12 user-notice">
+			<span>Already have an account?&nbsp;&nbsp;</span> <a href="#/login">SIGN
+				IN</a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,11 @@
+﻿<ol class="breadcrumb">
+    <li ng-if="$navigationState.currentState.name !== 'home'"><a ui-sref="home">Home</a>
+    <li ng-repeat="state in $navigationState.currentState.path">
+        <span ng-if="!$navigationState.isCurrent(state)">
+            <a href="#{{ state.url.format(params) }}">{{$navigationState.getDisplayName(state)}}</a>
+        </span>
+        <span ng-if="$navigationState.isCurrent(state)">
+            {{$navigationState.getDisplayName(state)}}
+        </span>
+    </li>
+</ol>

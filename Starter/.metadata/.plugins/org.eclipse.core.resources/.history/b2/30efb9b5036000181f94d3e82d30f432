@@ -1,0 +1,55 @@
+[
+	{
+		"route":"home",
+		"title": "Home"
+	},
+	{
+		"route":"admin",
+		"title": "Admin",
+        "menuCode": "ad",
+        "roleManagement": "Y", 
+	    "subNav": [
+				{
+	                "route": "manage-user",
+	                "title": "Manage User",
+	                "menuCode": "mu",
+	                "permissionsControl": "Y"
+	
+				},
+				{
+	                "route": "manage-contact",
+	                "title": "Manage Contact",
+	                "menuCode": "mc",
+	                "permissionsControl": "Y"
+				}
+			]
+	},
+	{
+		"route":"manage-book",
+        "title": "Reports",
+        "menuCode": "mb",
+        "roleManagement": "Y",
+        "subNav":[
+				{	
+					"route":"search-book",
+	                "title": "Search Book",
+	                "menuCode": "mb",
+	                "permissionsControl": "Y",
+	                "subNav": [
+	                    {
+						 "route": "search-book",
+	                        "title": " Search Book",
+	                        "menuCode": "mbl",
+	                        "permissionsControl": "Y"
+				        },
+	                    {
+						 "route": "book",
+	                        "title": "Book",
+	                        "menuCode": "mbd",
+	                        "permissionsControl": "Y"
+				        }				        
+				        ]
+				}
+			]
+	}	
+]

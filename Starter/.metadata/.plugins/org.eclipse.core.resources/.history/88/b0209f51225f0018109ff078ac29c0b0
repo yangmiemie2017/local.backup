@@ -1,0 +1,758 @@
+﻿[
+	{
+		"route":"home",
+		"title": "Home"
+	},
+	{
+		"route":"breeding",
+		"title": "Breeding",
+        "menuCode": "BR",
+        "roleManagement": "Y", 
+    "subNav": [
+			{
+                "route": "breeding",
+                "title": "Breeding Input",
+                "menuCode": "BRBI",
+                "permissionsControl": "Y"
+
+			},
+			{
+                "route": "creating-variety",
+                "title": "Creating Variety",
+                "menuCode": "BRCV",
+                "permissionsControl": "N"
+			},
+			{
+				"route":"download-upload-be-bid",
+                "title": "Download And Upload For BE_BIDs",
+                "menuCode": "DUFB",
+                "permissionsControl": "N"
+			},
+			{
+				"route":"mass-creating-variety",
+                "title": "Mass Creating Variety",
+                "menuCode": "BRMC",
+                "permissionsControl": "N"
+			},
+			{
+				"route":"mass-creating-mint-variety",
+                "title": "Mass Creating Mint Variety",
+                "menuCode": "MCMV",
+                "permissionsControl": "N"
+			},
+			{
+				"route":"mass-creating-spot-variety",
+                "title": "Mass Creating SPOT Variety",
+                "menuCode": "MCSV",
+                "permissionsControl": "N"
+			},
+			{
+                "route": "mass-upload-upov-traits",
+                "title": "Mass Upload UPOV Traits",
+                "menuCode": "MUUT",
+                "permissionsControl": "N"
+      }
+		]
+	},
+	{
+		"route":"psDataSearch",
+        "title": "P&S",
+        "menuCode": "PD",
+        "roleManagement": "Y",
+        "permissionsControl": "Y"
+	},
+	{
+		"route":"marketing",
+        "title": "Marketing",
+        "menuCode": "MD",
+        "roleManagement": "Y",
+        "subNav":[
+			{
+				"route":"varieties-selection",
+                "title": "Varieties Selection",
+                "menuCode": "MDVA",
+                "permissionsControl": "Y"
+
+			},
+			{
+				"route":"regional-marketing-data",
+                "title": "Regional Marketing Data",
+                "menuCode": "MDRE",
+                "permissionsControl": "Y"
+			},
+            {
+                "route": "local-marketing-data",
+                "title": "Local Marketing Data",
+                "menuCode": "MDL",
+                "permissionsControl": "Y"
+            },
+            {
+				"route":"update-local-stage-code",
+                "title": "Update Local Stage Code",
+                "menuCode": "MDUL",
+                "permissionsControl": "Y"
+
+			},
+            {
+				"route":"update-segmentation-details",
+                "title": "Update Segmentation Details",
+                "menuCode": "MDUS",
+                "permissionsControl": "Y"
+
+			},
+			{
+				"route":"mass-update-segmentation",
+                "title": "Mass Update Segmentation",
+                "menuCode": "MMUS",
+                "permissionsControl": "Y"
+			}
+		]
+	},
+	{
+		"route":"registration",
+        "title": "ALIP",
+        "menuCode": "RG",
+        "roleManagement": "Y",
+        "subNav":[
+			{
+				"route":"registration",
+                "title": "ALIP",
+                "menuCode": "RGRG",
+                "permissionsControl": "Y"
+
+			},
+			{
+				"route":"variety-naming",
+                "title": "Variety Naming",
+                "menuCode": "RGVN",
+                "permissionsControl": "Y"
+			},
+            {
+                "route": "process-control-download",
+                "title": "Process Control Download",
+                "menuCode": "RGPD",
+                "permissionsControl": "Y"
+            },
+            {
+				"route":"process-control-upload",
+                "title": "Process Control Upload",
+                "menuCode": "RGPU",
+                "permissionsControl": "Y"
+
+			},
+			{
+				"route":"download-upov",
+                "title": "Download UPOV",
+                "menuCode": "RGDU",
+                "permissionsControl": "Y"
+			},
+			{
+				"route":"mass-create-application",
+                "title": "Mass Create Application",
+                "menuCode": "MCA",
+                "permissionsControl": "Y"
+			},
+			{
+				"route":"mass-royalty-upload",
+                "title": "Mass Royalty Upload",
+                "menuCode": "MRU",
+                "permissionsControl": "Y"
+			},
+			{
+				"route":"mass-upload-alip",
+                "title": "Mass Upload ALIP General",
+                "menuCode": "MUAL",
+                "permissionsControl": "Y"
+			}
+		]
+	},
+	{
+		"route":"stage-transfer",
+        "title": "Stage Transfer",
+        "menuCode": "ST",
+        "roleManagement": "Y",
+        "subNav":[
+            {
+                "route": "stage-transfer",
+                "title": "Stage Transfer",
+                "menuCode": "STST",
+                "permissionsControl": "Y"
+
+            }
+          
+		]
+	},
+	{
+		"route":"assortment-meetings",
+        "title": "Assortment Meetings",
+        "menuCode": "AM",
+        "roleManagement": "Y",
+    "subNav": [
+      {
+        "route": "assortment-meetings-download-breeding",
+        "title": "Breeding Download",
+        "menuCode": "AMDL",
+        "permissionsControl": "Y"
+
+      },
+      {
+        "route": "assortment-meetings-upload-breeding",
+        "title": "Breeding Upload",
+        "menuCode": "AMUL",
+        "permissionsControl": "Y"
+
+      },
+      {
+        "route": "assortment-meetings-download-ps",
+        "title": "P&S Download",
+        "menuCode": "AMDL",
+        "permissionsControl": "Y"
+
+      },
+      {
+        "route": "assortment-meetings-upload-ps",
+        "title": "P&S Upload",
+        "menuCode": "AMUL",
+        "permissionsControl": "Y"
+
+      },
+      {
+        "route": "assortment-meetings-download-marketing",
+        "title": "Marketing Download",
+        "menuCode": "AMDL",
+        "permissionsControl": "Y"
+
+      },
+      {
+        "route": "assortment-meetings-upload-marketing",
+        "title": "Marketing Upload",
+        "menuCode": "AMUL",
+        "permissionsControl": "Y"
+
+      }
+    ]
+	},
+	{
+		"route":"product-selection",
+        "title": "Product Selection",
+        "menuCode": "PS",
+        "roleManagement": "Y",
+        "subNav":[
+			{
+				"route":"product-selection-download",
+                "title": "Download",
+                "menuCode": "PSDL",
+                "permissionsControl": "Y"
+
+			},
+			{
+				"route":"product-selection-upload",
+                "title": "Upload",
+                "menuCode": "PSUL",
+                "permissionsControl": "Y"
+
+			}
+		]
+	},
+	{
+		"route":"report",
+        "title": "Reports",
+        "menuCode": "RP",
+        "roleManagement": "Y",
+        "subNav":[
+			{	
+				"route":"inbreds-license-out",
+                "title": "Inbreds License Out",
+                "menuCode": "ILO",
+                "permissionsControl": "N",
+                "subNav": [
+                    {
+					 "route": "inbreds-license-search",
+                        "title": " Report Inbreds for GLG",
+                        "menuCode": "ISR",
+                        "permissionsControl": "Y"
+			        }]
+			},
+			{	
+				"route":"portfolio-overview-rep",
+                "title": "Portfolio Overview Reports",
+                "menuCode": "POOR",
+                "permissionsControl": "N",
+				"subNav":[
+					{
+						"route":"report-assortment-stage",
+						"title": "Assortment/Stage",
+						"menuCode": "APS",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"agrocorezone-hybrid",
+						"title": "AgroCoreZone Hybrid",
+						"menuCode": "ACZH",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"global-stage-gate-plan",
+						"title": "Global Overview of Stage-Gate Plan",
+						"menuCode": "GOSGP",
+						"permissionsControl": "Y"
+					},
+					{
+						"route":"reportLocalStageCodeOverview",
+						"title": "Local Stage Code Overview",
+						"menuCode": "LSCO",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"portfolio-per-local-unit",
+						"title": "Portfolio Per Local Unit",
+						"menuCode": "PPLU",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"reportVarietiesAcrossLocal",
+						"title": "Varieties Across Local Unit",
+						"menuCode": "VAL",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"reportOfSecondLevelSegments-search",
+						"title": "Report of 2nd Level Segments",
+						"menuCode": "ROSLS",
+						"permissionsControl": "Y"
+
+					}
+				]
+			},
+			{	
+				"route":"variety-report",
+                "title": "Variety Reports",
+                "menuCode": "VARE",
+                "permissionsControl": "N",
+				"subNav":[
+          {
+            "route": "search-regional-variety-bulletin",
+            "title": "Regional Variety Bulletin",
+            "menuCode": "RVB",
+            "permissionsControl": "Y"
+
+          },
+          {
+            "route": "local-variety-bulletin",
+            "title": "Local Variety Bulletin",
+            "menuCode": "LVB",
+            "permissionsControl": "Y"
+
+          },
+					{
+						"route":"report-p-line",
+						"title": "P/Line where used",
+						"menuCode": "PL",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"reportResistancesSearch",
+						"title": " Product Selection",
+						"menuCode": "RESIST",
+						"permissionsControl": "Y"
+					},
+					{
+						"route":"search-local-variety-name",
+						"title": "Local Variety Name",
+						"menuCode": "LVN",
+						"permissionsControl": "Y"
+					}
+				]
+			},
+			{	
+				"route":"pomotion-overview",
+                "title": "Promotion Overview",
+                "menuCode": "PROR",
+                "permissionsControl": "N",
+				"subNav":[
+					{
+						"route":"report-stage-changes",
+						"title": "Stage changes",
+						"menuCode": "SCC",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"reportReviewOfVarietySearch",
+						"title": "Review of Variety Promotions & Exceptions",
+						"menuCode": "RPE",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"search-variety-in-7",
+						"title": "Global Overview Variety in 7",
+						"menuCode": "GOVV",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"search-phase-out",
+						"title": "Global Phase outs",
+						"menuCode": "GPOT",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"reportOverviewVarietyExceptionsSearch",
+						"title": "Overview of new variety exceptions",
+						"menuCode": "OVE",
+						"permissionsControl": "Y"
+
+					}
+				]
+			},
+			{	
+				"route":"portfolio-detail",
+                "title": "Portfolio Details",
+                "menuCode": "PODE",
+                "permissionsControl": "N",
+				"subNav":[
+					{
+						"route":"report-pvralip-status",
+						"title": "PVR/Registration Status",
+						"menuCode": "PVRRS",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"search-variety-naming-bulletin",
+						"title": "Variety Naming Bulletin",
+						"menuCode": "VNB",
+						"permissionsControl": "Y"
+					},
+					{
+						"route":"report-hybrid-Pline-perSpecies",
+						"title": "Hybrid + P/Line PerSpecies",
+						"menuCode": "RHPLVS",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"reportMarketingAllowanceSearch",
+						"title": "Marketing Allowance",
+						"menuCode": "MAR",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"search-gmo-variety",
+						"title": "GMO Varieties",
+						"menuCode": "GMOV",
+						"permissionsControl": "Y"
+					},
+					{
+						"route":"report-royaltydetails-search",
+						"title": "Report for Royalty details",
+						"menuCode": "RFRD",
+						"permissionsControl": "Y"
+
+					}
+				]
+			},
+			{	
+				"route":"hpc-template",
+                "title": "HPC Template",
+                "menuCode": "HPCT",
+                "permissionsControl": "N",
+				"subNav":[
+					{
+						"route":"report-stage-gate-plan",
+						"title": "Stage Gate Plan for First level segmentation ",
+						"menuCode": "SGPM",
+						"permissionsControl": "Y"
+					},
+					{
+						"route":"reportOverviewOfNewRangeSearch",
+						"title": "Overview of New Range Introduction",
+						"menuCode": "ONR",
+						"permissionsControl": "Y"
+					},
+					{
+						"route":"report-phase-outs",
+						"title": "Life Cycle Management and Phase Outs",
+						"menuCode": "GPO",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"reportGeoPortfolioAfterAdvanceSearch",
+						"title": "Regional portfolio after advancement",
+						"menuCode": "GPAA",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"reportRegionalStageGateEffectSearch",
+						"title": "Stage Gate Effectiveness",
+						"menuCode": "SGE",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"reportExpectedNPIbyGeoSearch",
+						"title": "Expected NPI launch dates by Region",
+						"menuCode": "ENPI",
+						"permissionsControl": "Y"
+
+					},
+					{
+						"route":"flexibleReport",
+						"title": "Flexible Report",
+						"menuCode": "FR",
+						"permissionsControl": "Y"
+					}
+				]
+			}
+		]
+	},
+	{
+		"route":"queries",
+        "title": "Queries",
+        "menuCode": "QE",
+        "roleManagement": "Y"
+	},
+	{
+		"route":"administration",
+        "title": "Administration",
+        "menuCode": "AD",
+        "roleManagement": "N", 
+		"subNav":[
+			{
+				"route":"manageUsersModifySearch",
+                "title": "Manage Users",
+                "menuCode": "ADMU"
+			},
+			{
+				"route":"manageRolesModifySearch",
+                "title": "Manage Roles",
+                "menuCode": "ADMR"
+			},
+			{
+				"route":"manageVarietyInformation",
+                "title": "Manage Variety Information",
+                "menuCode": "ADVI"
+			}
+		]
+	},
+	{
+		"route":"dataAdministration",
+		"title": "Data Administration",
+        "menuCode": "DA",
+         
+        "roleManagement": "Y",
+    "subNav": [
+	  {
+		"route": "manageSeriesCode",
+        "title": "Manage Series Code",
+        "menuCode": "DASC",
+        "permissionsControl": "N"
+	  },
+      {
+        "route": "manageFlexibleTraits",
+        "title": "Manage Flexible Traits",
+        "menuCode": "DAFT",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageLookupTables",
+        "title": "Manage Look up tables",
+        "menuCode": "DALT",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "varietyTeamSearch",
+        "title": "Variety Team",
+        "menuCode": "DAVT",
+        "permissionsControl": "N"
+      },
+	  {
+        "route": "manageSegmentforStrategy",
+        "title": "Manage Display Segment",
+        "menuCode": "ADMNS",
+        "permissionsControl": "N"
+      },
+	  {
+        "route": "manageGMTraitRequire",
+        "title": "Manage GM Trait Require",
+        "menuCode": "ADMGM",
+        "permissionsControl": "N"
+      },
+	  {
+        "route": "manageHybridChassis",
+        "title": "Manage Hybrid / Variety Chassis Idealization",
+        "menuCode": "ADMHC",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageBeltLookup",
+        "title": "Manage Geographic Segmentation Lookup",
+        "menuCode": "DABL",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageSpeciesLookup",
+        "title": "Manage Species Lookup",
+        "menuCode": "ADSL",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageMaturityLookup",
+        "title": "Manage Maturity Lookup",
+        "menuCode": "ADML",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageGeneticFamily",
+        "title": "Manage Genetic Family",
+        "menuCode": "ADGF",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageNativeTraits",
+        "title": "Manage Native Traits",
+        "menuCode": "MNT",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "managePSLTraits",
+        "title": "Manage PSL Traits",
+        "menuCode": "ADPT",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageGeneticOwnerLookup",
+        "title": "Manage Genetic Owner Lookup",
+        "menuCode": "ADGO",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageFLSLookupAdd",
+        "title": "Manage First Level Segmentation Lookup",
+        "menuCode": "ADFSL",
+        "permissionsControl": "N"
+      },
+        {
+            "route": "manageSecLookupAdd",
+            "title": "Manage Second Level Segmentation",
+            "menuCode": "ADSEC",
+            "permissionsControl": "N"
+        },
+      {
+        "route": "managePMDTraits",
+        "title": "Manage PMD GM Traits",
+        "menuCode": "MPT",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageProductTypeLookup",
+        "title": "Manage Product Type Lookup",
+        "menuCode": "ADPTL",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageLeadGeography",
+        "title": "Manage Lead Geography",
+        "menuCode": "MLG",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manage-sap-data-fields",
+        "title": "Manage Additional SAP Data Fields",
+        "menuCode": "MLG",
+        "permissionsControl": "N"
+      },
+      {
+        "route": "manageOptionsForSecondLayer",
+        "title": "Manage Options In Local Marketing",
+        "menuCode": "MOILM",
+        "permissionsControl": "N"
+      },
+	  {
+                "route": "manageTPPTraits",
+				"title": "Manage TPP Traits",
+				"menuCode": "DATT",
+                "permissionsControl": "N"
+	  },
+	  {
+                "route": "uploadSpotData",
+				"title": "upload SpotData",
+				"menuCode": "DATT",
+                "permissionsControl": "N"
+	  }
+    ]
+	},{
+		"route":"productProfiles",
+        "title": "Product Profiles",
+        "menuCode": "PRPR",
+        "roleManagement": "Y", 
+		"subNav":[
+	        {
+                "route": "global-tpp-search",
+                "title": "Regional Target Product Profile",
+                "menuCode": "TPPSCH",
+                "permissionsControl": "Y"
+            },
+            {
+                "route": "local-tpp-search",
+                "title": "Local Target Product Profile",
+                "menuCode": "LTPPSCH",
+                "permissionsControl": "Y"
+            }
+		]
+	},{
+		"route":"strategy",
+        "title": "Strategy",
+        "menuCode": "STRA",
+        "roleManagement": "Y", 
+		"subNav":[
+			{
+				"route":"regionalStrategicPortfolio",
+                "title": "Regional Strategic Portfolio Shape",
+                "menuCode": "RSPS",
+                "permissionsControl": "Y"
+			},
+			{
+				"route":"RDTargetMarkets",
+                "title": "R&D Target Markets",
+                "menuCode": "RDTM",
+                "permissionsControl": "Y"
+			},
+			{
+				"route":"regionalPortfolioPipeline",
+                "title": "Regional Portfolio Pipeline Assessment",
+                "menuCode": "RPPA",
+                "permissionsControl": "Y"
+			},
+			{
+				"route":"geographyPortfolioPipeline",
+                "title": "Geography Portfolio Pipeline Assessment",
+                "menuCode": "GPPA",
+                "permissionsControl": "Y"
+			}
+		]
+	},{
+        "route": "SAP-MDM-Interface-mapping",
+        "title": "SAP MDM Interface mapping",
+        "menuCode": "BRBI",
+        "permissionsControl": "N"
+	},
+	  {
+        "route": "upload-spotdata",
+		"title": "upload SpotData",
+		"menuCode": "BRBI",
+        "permissionsControl": "N"
+	  }
+	
+]

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;NewApplication/src/main/resources/static/Scripts/spa/partials/_header.html&apos; to &apos;header.html&apos;" description="Rename resource &apos;_header.html&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/resources/static/Scripts/spa/partials/_header.html" name="header.html" stamp="1527474499265" updateReferences="true"/>
+</session>

@@ -1,0 +1,346 @@
+input[type="radio"],
+input[type="checkbox"] {
+    margin-top: 0;
+}
+
+.parentLine {
+    margin-bottom: 10px;
+}
+
+.breedingTitle {
+    margin-left: 0;
+    display: inline;
+}
+
+.tableSelect {
+    height: 23px;
+}
+
+.breedingTr {
+    background-color: #f0eded;
+}
+
+.PPI {
+    width: 79px;
+}
+
+.G {
+    display: inline;
+}
+
+.selectMultiple {
+    height: 60px !important;
+}
+
+.breedingTextarea {
+    width: 100%;
+}
+
+.breeding-seed {
+    padding-left: 0;
+}
+
+.rightForm {
+    padding-top: 0 !important;
+}
+
+.seedTextArea {
+    height: 69px !important;
+}
+
+.readonlyInput {
+    background-color: white !important;
+    padding-left: 0;
+}
+
+.topForm {
+    margin-bottom: 10px;
+}
+
+.seed-label {
+    font-weight: normal;
+}
+
+.bottomForm {
+    padding-left: 5px;
+}
+
+.seed-width {
+    width: 147px;
+}
+
+.smallBtn {
+    height: 25px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.psCopy {
+    padding: 0;
+}
+
+.table-caption {
+    background-color: cornsilk;
+    height: 28px;
+    padding-top: 8px;
+    padding-left: 5px;
+    border: 1px solid lightgray;
+}
+
+input.form-control,
+textarea.form-control {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.browseBtn {
+    height: 23px;
+    padding: 0 !important;
+}
+
+.country {
+    width: 134px;
+}
+
+.left-th {
+    text-align: left;
+}
+
+.right-th {
+    text-align: right;
+}
+
+caption {
+    color: black;
+}
+
+.invisible {
+    color: #f0eded;
+}
+
+select.form-control {
+    padding: 0;
+}
+
+.seed-Hybrid {
+    width: 300px;
+}
+
+.ps-general {
+    width: 200px;
+}
+
+.item-choosed {
+    width: 90%;
+    background: #f0eded;
+    margin-bottom: 5px;
+}
+
+.item-choosed tr td:nth-child(n) {
+    padding: 0;
+    border-top: 0;
+}
+
+.item-choosed tr td:nth-child(even) {
+    color: #00a0be;
+}
+
+.ps-general-table {
+    margin-top: 15px;
+}
+
+.ps-general-form {
+    margin-top: 15px;
+}
+
+.ps-general-topform {
+    margin-left: 0;
+    padding: 0;
+}
+
+.blue-th {
+    color: #00a0be;
+}
+
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+    vertical-align: middle;
+}
+
+.browse-input {
+    margin-left: 20px;
+}
+
+.browse-better {
+    display: inline-block;
+    width: 65px;
+    position: relative;
+}
+
+.browse-better>button {
+    width: 65px;
+}
+
+.browse-better>input[type="file"] {
+    display: inline-block;
+    width: 65px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    filter: Alpha(opacity=0);
+}
+
+.input-file {
+    padding: 0;
+}
+
+/*.table-condensed > thead > tr > th,
+.table-condensed > tbody > tr > th,
+.table-condensed > tfoot > tr > th,
+.table-condensed > thead > tr > td,
+.table-condensed > tbody > tr > td,
+.table-condensed > tfoot > tr > td {
+    padding: 0;
+}*/
+
+.seedTr {
+    width: 300px;
+}
+
+.search-area {
+    margin-bottom: 5px;
+}
+
+.paddingTh {
+    padding-right: 10px !important;
+}
+
+.textarea-form-control {
+    height: 52px !important;
+}
+
+.blankTd {
+    width: 250px;
+}
+
+.checkboxTd {
+    width: 50px;
+}
+
+.registrationTh {
+    width: 100px;
+}
+
+.registrationTr {
+    width: 200px;
+}
+
+.centerInDiv {
+    text-align: center;
+}
+
+.bottomForm {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 0;
+}
+
+.gray {
+    background-color: #f0eded;
+    width: 100%;
+}
+
+.general-remark {
+    margin-left: 0;
+}
+
+.general-remark-div {
+    padding-left: 0;
+}
+
+.production-selection-textarea {
+    width: 100px;
+}
+
+.variety-th {
+    width: 100px;
+}
+
+.resigtraion-application {
+    margin-left: 0;
+}
+
+.add-margin {
+    margin-top: 5px;
+}
+
+.data-subNav {
+    height: 25px;
+}
+
+.data-select {
+    margin-top: 5px;
+}
+
+.data-subNavTitle {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+.center {
+    text-align: center;
+}
+
+.data-header {
+    margin-bottom: 5px;
+}
+
+.data-saveBtn {
+    width: 70px;
+}
+
+.data-table {
+    margin-bottom: 5px;
+}
+
+.attach {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dataBtn {
+    padding-left: 6px;
+}
+
+.checkbox {
+    min-height: 23px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 5px !important;
+}
+
+.mass-upload {
+    margin-top: 5px;
+}
+
+.queries-multiple {
+    height: 100px !important;
+}
+
+.stage-table {
+    margin-bottom: 3px;
+}
+
+.stage-title {
+    margin-bottom: 0;
+}
+
+.textarea-input {
+    height: 46px !important;
+}
+
+.stage-div {
+    padding-left: 0;
+}

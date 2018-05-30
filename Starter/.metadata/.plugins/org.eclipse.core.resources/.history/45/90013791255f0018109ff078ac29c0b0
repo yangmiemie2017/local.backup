@@ -1,0 +1,8 @@
+package com.strong.web.menu;
+
+import java.io.IOException;
+import java.io.InputStream;  
+
+public class MenuSeetingHelper {
+	
+}
