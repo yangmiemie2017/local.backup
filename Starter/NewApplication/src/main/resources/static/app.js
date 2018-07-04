@@ -156,6 +156,90 @@
                     skip: true
                 }
             })
+            .state('manage-user', {
+                url: "/manage-user-add",
+                templateUrl: "Scripts/spa/administration/manage-users-details.html",
+                resolve: {
+                    deps: requireJS([
+                        'administration/manage-users.controller'
+                    ])
+                },
+                ncyBreadcrumb: {
+                	label: 'Manage users - add'
+                }
+            })
+            .state('manage-user-modify-search', {
+                url: "/manage-user-modify-search",
+                templateUrl: "Scripts/spa/administration/manage-users-search.html",
+                resolve: {
+                    deps: requireJS([
+                        'administration/manage-users.controller'
+                    ])
+                },
+                ncyBreadcrumb: {
+                	label: 'Manage users - modify search'
+                }
+            })        
+            .state('manage-user-modify-search-results', {
+                url: "/manage-user-modify-search-results",
+                templateUrl: "Scripts/spa/administration/manage-users-search.html",
+                resolve: {
+                    deps: requireJS([
+                        'administration/manage-users.controller'
+                    ])
+                },
+                ncyBreadcrumb: {
+                	label: 'Manage users - modify search results'
+                }
+            })   
+            .state('manage-user-modify', {
+                url: "/manage-user-modify",
+                templateUrl: "Scripts/spa/administration/manage-users-details.html",
+                resolve: {
+                    deps: requireJS([
+                        'administration/manage-users.controller'
+                    ])
+                },
+                ncyBreadcrumb: {
+                	label: 'Manage users - modify'
+                }
+            })              
+            .state('manage-user-delete-search', {
+                url: "/manage-user-delete-search",
+                templateUrl: "Scripts/spa/administration/manage-users-search.html",
+                resolve: {
+                    deps: requireJS([
+                        'administration/manage-users.controller'
+                    ])
+                },
+                ncyBreadcrumb: {
+                	label: 'Manage users - delete search'
+                }
+            })  
+            .state('manage-user-delete-search-results', {
+                url: "/manage-user-delete-search-results",
+                templateUrl: "Scripts/spa/administration/manage-users-search.html",
+                resolve: {
+                    deps: requireJS([
+                        'administration/manage-users.controller'
+                    ])
+                },
+                ncyBreadcrumb: {
+                	label: 'Manage users - delete search results'
+                }
+            })              
+            .state('manage-user-delete', {
+                url: "/manage-user-delete",
+                templateUrl: "Scripts/spa/administration/manage-users-details.html",
+                resolve: {
+                    deps: requireJS([
+                        'administration/manage-users.controller'
+                    ])
+                },
+                ncyBreadcrumb: {
+                	label: 'Manage users - details'
+                }
+            })             
             ;
         }
 

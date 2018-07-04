@@ -1,0 +1,158 @@
+<div ng-controller="manageUsersCtrl as manageUsers">
+	<div ng-show="manageUsers.loadCompleted == true">
+		<div class="row">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-11">
+				<div class="add-margin">
+					<h5 class="formTitle">
+						<b><span
+							ng-bind="manageUsers.actionList[manageUsers.user.action]"></span></b>
+					</h5>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-11">
+				<div class="add-margin">
+					<p class="subformTitle" style="margin-left: 0">
+						Fields marked<span class="sign-red"> * </span> are mandatory
+					</p>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 data-select">
+				<select ng-model="manageUsers.user.action"
+					ng-options="x as y for (x,y) in manageUsers.actionList"
+					ng-change="manageUsers.changeAction()"
+					class="form-control input-sm"></select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="form-group">
+					<label class="col-xs-4 col-lg-2 col-md-2 col-sm-2 control-label">User
+						Id<span class="sign-red"> * </span>
+					</label>
+					<div class="col-xs-5 col-lg-3 col-md-3 col-sm-3">
+						<input type="text" name="userId"
+							ng-model="manageUsers.user.userId" ng-pattern="/^\s*\S+\s*$/"
+							class="form-control input-sm" maxlength="20"
+							ng-disabled="manageUsers.user.action != 'Add'" required>
+						<div class="input-error-messages"
+							ng-messages="userDetailForm.userId.$error"
+							ng-if="userDetailForm.$submitted || userDetailForm.userId.$touched"
+							role="alert">
+							<div ng-message="required">Please Enter the User Id</div>
+							<div ng-message="pattern">Please enter the User Id as a
+								single word</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 col-lg-2 col-md-2 col-sm-2 control-label">Email
+						Id<span class="sign-red"> * </span>
+					</label>
+					<div class="col-xs-5 col-lg-3 col-md-3 col-sm-3">
+						<input type="email" name="emailId"
+							ng-model="manageUsers.user.emailId" class="form-control input-sm"
+							maxlength="50" ng-disabled="manageUsers.user.action == 'Delete'"
+							required>
+						<div class="input-error-messages"
+							ng-messages="userDetailForm.emailId.$error"
+							ng-if="userDetailForm.$submitted || userDetailForm.emailId.$touched"
+							role="alert">
+							<div ng-message="required">Please Enter the Email Id</div>
+							<div ng-message="email">Sorry, your email address is not
+								valid.</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-4 col-lg-2 col-md-2 col-sm-2 control-label">Name<span
+						class="sign-red"> * </span></label>
+					<div class="col-xs-5 col-lg-3 col-md-3 col-sm-3">
+						<input type="text" name="name" ng-model="manageUsers.user.name"
+							class="form-control input-sm" maxlength="50"
+							ng-disabled="manageUsers.user.action == 'Delete'" required>
+						<div class="input-error-messages"
+							ng-messages="userDetailForm.name.$error"
+							ng-if="userDetailForm.$submitted || userDetailForm.name.$touched"
+							role="alert">
+							<div ng-message="required">Please Enter the Name</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group manage_detail_tableBox">
+					<table
+						class="table table-bordered table-species-roles manage_detail_tableBox_table">
+						<tr class="active">
+							<td>Role</td>
+							<td ng-show="manageUsers.user.action == 'Update'">&nbsp;</td>
+						</tr>
+						<tr ng-repeat="role in manageUsers.user.roles track by $index">
+							<td><select ng-model="role.role"
+								ng-options="x as y for (x, y) in manageUsers.rolesList"
+								class="form-control input-sm"
+								ng-disabled="manageUsers.user.action == 'Delete'">
+									<option value="">&nbsp;</option>
+							</select></td>
+							<td ng-show="manageUsers.user.action == 'Update'"><input
+								type="checkbox" ng-model="role.isChecked"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-xs-12 col-lg-7 col-md-7 col-sm-10 btn-line">
+					<button type="button" class="btn btn-info smallBtn btn-add-rows"
+						ng-click="manageUsers.addExtraRows()"
+						ng-show="manageUsers.user.action != 'Delete'">Add rows</button>
+					<button type="button" class="btn btn-info smallBtn btn-delete-rows"
+						ng-click="manageUsers.removeRows()"
+						ng-show="manageUsers.user.action == 'Update'"
+						ng-disabled="manageUsers.disableDelete()">Delete</button>
+				</div>
+
+				<div class="divide"></div>
+
+				<div>
+<!-- 					<form name="pUploadForm" class="form-horizontal" novalidate> -->
+						<div class="row">
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-11">
+								<div class="add-margin">
+									<h5 class="formTitle">
+										<b>File Upload</b>
+									</h5>
+								</div>
+							</div>
+							<div
+								class="col-md-push-4 col-sm-push-4 col-lg-2 col-md-2 col-sm-3 col-xs-4 data-select">
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-2 col-xs-4">
+								<label class="control-label"><b>Upload File</b></label>
+							</div>
+							<div class="col-sm-4 col-xs-10 input-file">
+								<input class="browse-form-control" type="text"	ng-model="manageUsers.excelFile.name" disabled />
+								<div class="browse-better" title="Click here to browse file">
+									<input type="file" class="browse-btn"
+										file="manageUsers.excelFile" />
+									<button type="button">Browse...</button>
+								</div>
+							</div>
+							<div class="btnGroup">
+								<button type="submit" class="btn btn-info smallBtn" ng-click="manageUsers.uploadFile()" ng-disabled="manageUsers.isUploading">Upload</button>
+							</div>
+						</div>
+<!-- 					</form> -->
+				</div>
+			</div>
+		</div>
+		<div class="row" ng-show="manageUsers.user.action != 'Delete'">
+			<div class="btn-line-bottom">
+				<button type="button" class="btn btn-info btn-save smallBtn"
+					ng-click="manageUsers.saveUser()"
+					ng-disabled="manageUsers.IsSaving">Save</button>
+				<button type="button" class="btn btn-info btn-cancel smallBtn"
+					ng-click="manageUsers.clearUserDetails()"
+					ng-disabled="manageUsers.IsSaving">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>

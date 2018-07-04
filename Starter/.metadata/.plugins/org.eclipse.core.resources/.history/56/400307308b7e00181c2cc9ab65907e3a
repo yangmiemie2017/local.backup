@@ -1,0 +1,70 @@
+﻿(function () {
+    'use strict';
+
+    angular
+        .module('strive')
+        .factory('webapi', webapi);
+
+    webapi.$inject = ['$http', '$httpParamSerializer','$window','Upload'];
+
+    function webapi($http, $httpParamSerializer, $window,Upload) {
+
+        return {
+
+            post: function (className, actionName, parameters) {
+        		var token = $window.sessionStorage.getItem('TOKEN');
+        		if(token != null) {
+        			$http.defaults.headers.common['Authorization'] = 'Token ' + token;
+        		}
+        		$http.defaults.headers.common['Content-Type'] = 'application/json';
+        		
+                return $http({
+                    method: 'POST',
+                    url: '/api',
+                    data: JSON.stringify({ clazz: className, action: actionName, parameters: parameters })
+                });
+            },
+
+            download: function (parameters) {
+        		var token = $window.sessionStorage.getItem('TOKEN');
+        		if(token != null) {
+        			$http.defaults.headers.common['Authorization'] = 'Token ' + token;
+        		}
+        		$http.defaults.headers.common['Content-Type'] = 'application/json';
+        		
+                return $http({
+                    method: 'POST',
+                    url: '/download',
+                    responseType: 'arraybuffer',
+                    data: JSON.stringify({clazz: '', action: '', parameters: parameters })
+                });
+            },
+            
+            upload: function(file) {
+        		var token = $window.sessionStorage.getItem('TOKEN');
+
+            	Upload.upload({
+                url: '/upload',
+                headers:{'Authorization': 'Token ' + token},
+                data: { file: file },
+            } ,function (result) {
+                    // error handler
+                    logger.error(result.data.message);
+                });
+            },
+                
+	        getMenu: function () {
+	    		var token = $window.sessionStorage.getItem('TOKEN');
+	    		if(token != null) {
+	    			$http.defaults.headers.common['Authorization'] = 'Token ' + token;
+	    		}
+	    		$http.defaults.headers.common['Content-Type'] = 'application/json';
+	    		
+	            return $http({
+	                method: 'get',
+	                url: '/menu'
+	            });
+        	}
+        }
+    }
+})();

@@ -51,7 +51,7 @@ public class MenuController {
 
     @RequestMapping(value = "/menu", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
     @CrossOrigin(origins = "*")
-    public ResponseEntity<?> logoffAction() {
+    public ResponseEntity<?> getMenuAction() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         UserToken token = (UserToken) authentication.getPrincipal();

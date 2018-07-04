@@ -1,0 +1,81 @@
+﻿(function () {
+    'use strict';
+
+    angular
+        .module('strive')
+        .factory('webapi', webapi);
+
+    webapi.$inject = ['$http', '$httpParamSerializer','$window','Upload'];
+
+    function webapi($http, $httpParamSerializer, $window,Upload) {
+
+        return {
+
+            post: function (className, actionName, parameters) {
+        		var token = $window.sessionStorage.getItem('TOKEN');
+        		if(token != null) {
+        			$http.defaults.headers.common['Authorization'] = 'Token ' + token;
+        		}
+        		$http.defaults.headers.common['Content-Type'] = 'application/json';
+        		
+                return $http({
+                    method: 'POST',
+                    url: '/api',
+                    data: JSON.stringify({ clazz: className, action: actionName, parameters: parameters })
+                });
+            },
+
+            download: function (parameters) {
+        		var token = $window.sessionStorage.getItem('TOKEN');
+        		if(token != null) {
+        			$http.defaults.headers.common['Authorization'] = 'Token ' + token;
+        		}
+        		$http.defaults.headers.common['Content-Type'] = 'application/json';
+        		
+                return $http({
+                    method: 'POST',
+                    url: '/download',
+                    responseType: 'arraybuffer',
+                    data: JSON.stringify({clazz: '', action: '', parameters: parameters })
+                });
+            },
+            
+             upload: function(file, parameters) {
+        		var token = $window.sessionStorage.getItem('TOKEN');
+
+//            	return Upload.upload({
+//		                url: '/upload',
+//		                headers:{'Authorization': 'Token ' + token},
+//		                data: { file: file, "data":JSON.stringify({clazz: '', action: '', parameters: parameters })},
+//		            });
+            	return Upload.upload({
+		                url: '/upload',
+		                headers:{'Authorization': 'Token ' + token},
+		                fields: {"data":JSON.stringify({clazz: '', action: '', parameters: parameters })}, // additional data to send
+		                file: file
+	            	});        		
+		     },
+		     
+             uploads: function(files,parameters) {
+        		if (files && files.length) {
+        	        for (var i = 0; i < files.length; i++) {
+		            	upload(files[i],parameters);
+        	        }
+        		}
+		     },      
+		     
+	         getMenu: function () {
+	    		var token = $window.sessionStorage.getItem('TOKEN');
+	    		if(token != null) {
+	    			$http.defaults.headers.common['Authorization'] = 'Token ' + token;
+	    		}
+	    		$http.defaults.headers.common['Content-Type'] = 'application/json';
+	    		
+	            return $http({
+	                method: 'get',
+	                url: '/menu'
+	            });
+        	}
+        }
+    }
+})();

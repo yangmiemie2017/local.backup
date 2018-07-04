@@ -1,0 +1,124 @@
+<div ng-controller="manageUsersCtrl as manageUsers">
+        <script type="text/ng-template" id="modal-items">
+            <div class="modal-header">
+                <h4 class="modal-title">{{vm.title}}</h4>
+                <button type="button" class="btn modal-icon-close" ng-click="vm.close()">X</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" ng-model="vm.filter" class="form-control input-sm modal-filter">
+
+                <select ng-model="vm.selectedItem" ng-options=" x for x in vm.items | filter: vm.filter" class="user-info-select" ng-dblclick="vm.selectItem()" size="12">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-info smallBtn btn-select" type="button" ng-click="vm.selectItem()">Select</button>
+            </div>
+        </script>
+        <div ng-show="manageUsers.loadCompleted == true">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="add-margin">
+                        <h5 class="formTitle"><b><span ng-bind="manageUsers.actionList[manageUsers.user.action]"></span></b></h5>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 data-select">
+                    <select ng-model="manageUsers.user.action" ng-options="x as y for (x,y) in manageUsers.actionList" ng-change="manageUsers.changeAction()" class="form-control input-sm"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="col-xs-3 col-lg-1 col-md-1 col-sm-1 control-label">User Id</label>
+                        <div class="col-xs-4 col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" name="userId" ng-model="manageUsers.user.userId" class="form-control input-sm" disabled="disabled">
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" class="btn btn-info smallBtn btn-selectBox" ng-click="manageUsers.openUsersModal()">...</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 col-lg-1 col-md-1 col-sm-1 control-label">Email Id</label>
+                        <div class="col-xs-4 col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" name="emailId" ng-model="manageUsers.user.emailId" class="form-control input-sm" disabled="disabled">
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" class="btn btn-info smallBtn btn-selectBox" ng-click="manageUsers.openEmailsModal()">...</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 col-lg-1 col-md-1 col-sm-1 control-label">Name</label>
+                        <div class="col-xs-4 col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" name="name" ng-model="manageUsers.user.name" class="form-control input-sm">
+                        </div>
+                        <div class="manage_search_blankBar">&nbsp;</div>
+                        <div class="col-xs-7 col-lg-4 col-md-4 col-sm-3">
+                            <span class="media-middle">(Use *,% and ? for wildcard search)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-11 col-lg-4 col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">Role</label>
+                        <div class="col-xs-9">
+                            <select ng-model="manageUsers.user.role" ng-options="x as y for (x, y) in manageUsers.rolesList" class="user-info-select" size="6" multiple="multiple"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="btn-line-bottom">
+                    <button type="button" class="btn btn-info smallBtn btn-search" ng-click="manageUsers.searchUsers()">Search</button>
+                    <button type="button" class="btn btn-info smallBtn btn-reset" ng-click="manageUsers.resetSearchCriteria()">Reset</button>
+                </div>
+            </div>
+            <div ng-show="manageUsers.searchResultCount > 0">
+                <div class="row">
+                    <div class="table-head col-xs-7 col-lg-7 col-md-7 col-sm-7">
+                        <span class="col-xs-11 col-lg-6 col-md-6 col-sm-6">
+                            Click on Email Id to see user details
+                        </span>
+                        <span class="table-head-pull-right col-xs-11 col-lg-6 col-md-6 col-sm-6">
+                            Total Number of Records :<b>{{manageUsers.searchResultCount}}</b>
+                        </span>
+                    </div>
+                    <table class="table table-bordered table-bottom table-user-emails col-xs-7 col-lg-7 col-md-7 col-sm-7">
+                        <tr class="active">
+                            <th>
+                                <input type="checkbox" ng-model="manageUsers.selectUsers" ng-click="manageUsers.selectAll()">
+                            </th>
+                            <th>Email Id</th>
+                            <th>User Name</th>
+                        </tr>
+                        <tr ng-repeat="users in manageUsers.searchResult track by $index">
+                            <td>
+                                <input type="checkbox" ng-model="users.isChecked" class="" ng-click="manageUsers.unSelect()" />
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" ng-click="manageUsers.redirectToUserDetail(manageUsers.user.action, users.userID)">
+                                    {{users.emailId}}
+                                </a>
+                            </td>
+                            <td>{{users.userName}}</td>
+                        </tr>
+                    </table>
+                    <div class="row col-xs-12 col-lg-12 col-md-12 col-sm-12">
+                        <div class="btn-line">
+                            <div ng-show="manageUsers.user.action == 'Update'">
+                                <button type="button" class="btn btn-info smallBtn btn-send-mail" ng-click="manageUsers.sendMail()" ng-disabled="manageUsers.disableUserListBtn()">Send Mail</button>
+                            </div>
+                            <div ng-show="manageUsers.user.action == 'Delete'">
+                                <button type="button" class="btn btn-info smallBtn btn-delete-users" ng-click="manageUsers.deleteUsers()" ng-disabled="manageUsers.disableUserListBtn()">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="manageUsers.emailAddresses != null && manageUsers.emailAddresses != ''">
+                    <textarea class="textarea-emails" ng-model="manageUsers.emailAddresses"></textarea>
+                </div>
+
+            </div>
+        </div>
+</div>

@@ -61,8 +61,10 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         final boolean debug = logger.isDebugEnabled();
 
         try {
+            logger.info("Request URL: "+request.getRequestURL());
 
             String header = request.getHeader("Authorization");
+            
             if (header == null || !header.startsWith("Token ")) {
 
                 throw new AuthenticationCredentialsNotFoundException("Missing Authorization Token in head");

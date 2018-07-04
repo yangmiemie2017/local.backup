@@ -1,0 +1,590 @@
+﻿(function () {
+    'use strict';
+
+    define(['app','services/webapi'], function (app) {
+        app.controller('manageUsersCtrl', manageUsersCtrl);
+
+        manageUsersCtrl.$inject = ['webapi', '$state', '$timeout', 'logger', '$stateParams', '$uibModal', '$scope','Upload'];
+
+        function manageUsersCtrl(webapi, $state, $timeout, logger, $stateParams, $uibModal, $scope,Upload) {
+            var max_extra_row = 2;
+            var vm = this;
+
+            vm.loadCompleted = false;
+            vm.IsDeleting = false;
+            var act = $stateParams.action == null ? (window.sessionStorage["userManagementAction"] == null ? "Add" : window.sessionStorage["userManagementAction"]) : $stateParams.action;
+            window.sessionStorage["userManagementAction"] = act;
+
+            if ($state.current.name == "manage-user-modify-search" || $state.current.name == "manage-user-delete-search")
+            {
+                window.sessionStorage.removeItem("userManagement");
+                window.sessionStorage.removeItem("userManagementUserID");
+            }
+
+            var resetPage = function () {
+                if (vm.user.action == "Add") {
+                    Redirect("manage-user", { action: vm.user.action});
+                }
+                else {
+                    Redirect("manage-user-modify", { action: vm.user.action, userId: vm.user.userId });
+                }    
+            }
+
+            vm.actionList = {
+                "Add": "Add User",
+                "Delete": "Delete User",
+                "Update": "Modify User"
+            };
+
+            vm.newUser = function () {
+                return {
+                    action: "Add",
+                    userId: "",
+                    emailId: "",
+                    name: "",
+                    roles: [],
+                    deletedRoles: []
+                }
+            }
+
+            vm.initAddUser = function () {
+            	return;
+                var promise = webapi.post("ManageUsersService", "InitUserDetailsPage", { "userId": vm.user.userId });
+                promise.then(
+                    function (data) {
+                        vm.errorMsg = data.data.errorMsg;
+                        if (vm.errorMsg == "" || vm.errorMsg == null) {
+                            vm.rolesList = data.data.dicRole;
+ 
+                            vm.addExtraRows = function () {
+                                for (var i = 0; i < max_extra_row; i++) {
+                                    vm.user.roles.push({
+                                        role: "",
+                                        userRoleId: "",
+                                        isChecked: false
+                                    });
+                                }
+                            };
+
+                            if (vm.user.userId == "") {
+                                vm.addExtraRows();
+                            } else {
+                                vm.user.name = data.data.userName;
+                                vm.user.emailId = data.data.emailId;
+                                if (data.data.listRoles.length == 0)
+                                    vm.addExtraRows();
+                                else
+                                    vm.user.roles = data.data.listRoles;
+                            }
+                        } else {
+                            logger.error(vm.errorMsg);
+                        }
+
+                        if ($scope.userDetailForm)
+                            $scope.userDetailForm.$setPristine();
+
+                        vm.loadCompleted = true;
+                    },
+                    function (data) {
+                        logger.error(data.message);
+                    });
+                };
+
+            $scope.$watch("userDetailForm.$dirty", function (newValue) {
+                $state.params.isDirty = $state.params.isDirty || newValue;
+            });
+
+            vm.searchCriteria = function () {
+                return {
+                    action: "Update",
+                    userId: "",
+                    emailId: "",
+                    name: "",
+                    role: [],
+                    isResult: false
+                }
+            }
+
+            vm.initSearchUser = function (isResult) {
+                var promise = webapi.post("ManageUsersService", "InitUserSearchPage", null);
+                promise.then(
+                    function (data) {
+                        vm.errorMsg = data.data.errorMsg;
+                        if (vm.errorMsg == "" || vm.errorMsg == null) {
+                            vm.rolesList = data.data.dicRole;
+                            vm.usersList = data.data.listUsers;
+                            vm.emailsList = data.data.listEmails;
+
+                        } else {
+                            logger.error(vm.errorMsg);
+                        }
+
+                        if (!isResult)
+                            vm.loadCompleted = true;
+                    },
+                    function (data) {
+                        logger.error(data.message);
+                    });
+            };
+
+            vm.changeAction = function () {
+                window.sessionStorage["userManagementAction"] = vm.user.action;
+
+                if (vm.user.action == "Add")
+                    Redirect("manage-user", { action: vm.user.action });
+                if (vm.user.action == "Update")
+                    Redirect("manage-user-modify-search", { action: vm.user.action });
+                if (vm.user.action == "Delete")
+                    Redirect("manage-user-delete-search", { action: vm.user.action });
+            }
+
+            vm.removeRows = function () {
+                for (var i = vm.user.roles.length - 1; i >= 0 ; i--) {
+                    if (vm.user.roles[i].isChecked) {
+                        vm.user.deletedRoles.push(vm.user.roles.splice(i, 1)[0]);
+                    }
+                }
+
+                if (vm.user.roles.length == 0)
+                    vm.addExtraRows();
+            };
+
+            vm.searchUsers = function () {          	
+                if (vm.user.isResult == false)
+                {
+                    vm.user.isResult = true;
+                    if (vm.user.action == "Update")
+                        Redirect("manage-user-modify-search-results", { action: vm.user.action, criteria: vm.user });
+
+                    if (vm.user.action == "Delete")
+                        Redirect("manage-user-delete-search-results", { action: vm.user.action, criteria: vm.user });
+                } else {
+                    var promise = webapi.post('ManageUsersService', 'SearchUsers', vm.user);
+
+                    promise.then(
+                        function (data) {
+                            vm.errorMsg = data.data.errorMsg;
+                            if (vm.errorMsg == "" || vm.errorMsg == null) {
+                                vm.searchResultCount = data.data.searchResultCount;
+                                vm.searchResult = data.data.searchResult;
+                            } else {
+                                vm.searchResultCount = 0;
+                                logger.error(vm.errorMsg);
+                            }
+
+                            var temp = JSON.stringify(vm.user)
+                            window.sessionStorage["userManagement"] = temp;
+                            vm.loadCompleted = true;
+                        },
+                        function (data, status, headers, config) {
+                            logger.error(data.data.errorMsg);
+                        });
+                }
+            };
+
+            vm.selectAll = function () {
+                vm.emailAddresses = "";
+                if (vm.searchResultCount != null && vm.searchResult.length > 0)
+                {
+                    for (var user in vm.searchResult) {
+                        vm.searchResult[user].isChecked = vm.selectUsers;
+                    }
+                }
+            };
+            
+            vm.unSelect = function() {
+                vm.selectUsers = false;
+            };
+
+            vm.disableDelete = function () {
+                var disabled = true;
+                if (vm.user != null && vm.user.roles != null && vm.user.roles.length > 0) {
+                    for (var species in vm.user.roles) {
+                        if (vm.user.roles[species].isChecked) {
+                            disabled = false;
+                            break;
+                        }
+                    }
+                }
+
+                return disabled;
+            };
+
+            vm.disableUserListBtn = function () {
+                var disabled = true;
+                if (vm.searchResult != null && vm.searchResult.length > 0) {
+                    for (var user in vm.searchResult) {
+                        if (vm.searchResult[user].isChecked) {
+                            disabled = false;
+                            break;
+                        }
+                    }
+                }
+
+                return disabled || vm.IsDeleting;
+            };
+
+            vm.sendMail = function () {
+                if (vm.searchResultCount != null && vm.searchResult.length > 0) {
+                    var emails = "";
+                    for (var user in vm.searchResult) {
+                        if (vm.searchResult[user].isChecked)
+                            emails = emails + vm.searchResult[user].emailId + ";";
+                    }
+
+                    if (emails.length == 0) {
+                        logger.error("Please select a user to send the mail");
+                    }else if (emails.length < 2000) {
+                        document.location.href = "mailto:" + emails;
+                    } else {
+                        vm.emailAddresses = emails;
+                        logger.error("Please copy the email ids from the text box to send mail");
+                    }
+                }
+            };
+
+            vm.deleteUsers = function () {
+                if (vm.searchResultCount != null && vm.searchResult.length > 0) {
+                    var users = [];
+                    for (var user in vm.searchResult) {
+                        if (vm.searchResult[user].isChecked)
+                            users.push(vm.searchResult[user].userID);
+                    }
+
+                    if (users.length > 0) {
+                        vm.IsDeleting = true;
+
+                        var promise = webapi.post('ManageUsersService', 'DeleteUsers', { "users": users });
+
+                        promise.then(
+                            function (data) {
+                                vm.errorMsg = data.data.errorMsg;
+                                if (vm.errorMsg == "" || vm.errorMsg == null) {
+                                    for (var i = vm.searchResult.length - 1; i >= 0; i--) {
+                                        if (vm.searchResult[i].isChecked)
+                                            vm.searchResult.splice(i, 1);
+                                    }
+
+                                    if (data.data.succeedMsg == "" || data.data.succeedMsg == null)
+                                        logger.success('Data Successfully deleted');
+                                    else
+                                        logger.success(data.data.succeedMsg);
+
+                                    vm.searchResultCount = vm.searchResult.length;
+                                } else {
+                                    logger.error(vm.errorMsg);
+                                }
+
+                                vm.IsDeleting = false;
+                            },
+                            function (data, status, headers, config) {
+                                logger.error(vm.errorMsg);
+                                vm.IsDeleting = false;
+                        });
+                    } else {
+                        logger.error("Please select at least one of the checkboxes");
+                    }
+                }
+            };
+
+            vm.saveUser = function () {
+                $scope.userDetailForm.$setSubmitted();
+                if ($scope.userDetailForm.$invalid)
+                    return;
+
+                vm.IsSaving = true;
+                var promise = webapi.post('ManageUsersService', 'SaveUser', vm.user);
+
+                promise.then(
+                    function (data) {
+                        vm.errorMsg = data.data.errorMsg;
+                        if (vm.errorMsg == "" || vm.errorMsg == null) {
+                            if (data.data.succeedMsg == "" || data.data.succeedMsg == null)
+                                logger.success('Data Successfully added');
+                            else
+                                logger.success(data.data.succeedMsg);
+                        } else {
+                            logger.error(vm.errorMsg);
+                        }
+
+                        vm.user.deletedRoles = [];
+                        vm.IsSaving = false;
+
+                        if ($scope.userDetailForm)
+                            $scope.userDetailForm.$setPristine();
+
+                        $state.params.isDirty = false;
+                        resetPage();
+                    },
+                    function (data, status, headers, config) {
+                        vm.IsSaving = false;
+                        logger.error(vm.errorMsg);
+                    });
+            };
+        
+            vm.redirectToUserDetail = function (act, id) {
+                window.sessionStorage["userManagementUserID"] = id;
+
+                if (act == "Update")
+                    Redirect("manage-user-modify", { action: act, userId: id });
+
+                if (act == "Delete")
+                    Redirect("manage-user-delete", { action: act, userId: id });
+            };
+
+            var pageload = function () {
+                vm.IsSaving = false;
+                if (act == "Add") {
+                    vm.user = vm.newUser();
+                    vm.user.action = act;
+                    vm.initAddUser();
+                } else if (act == "Update") {
+                    if ($stateParams.userId == null) {
+                        if ($state.current.name.contains("manage-user-modify-search")) {
+                            vm.user = $stateParams.criteria == null ? vm.searchCriteria() : $stateParams.criteria;
+                            if (window.sessionStorage["userManagement"]) {
+                                vm.user = JSON.parse(window.sessionStorage.getItem("userManagement"));
+                            }
+
+                            vm.initSearchUser(vm.user.isResult);
+
+                            if (vm.user.isResult)
+                                vm.searchUsers();
+                        } else if ($state.current.name == "manage-user-modify") {
+                            vm.user = vm.newUser();
+                            if (window.sessionStorage["userManagementUserID"])
+                                vm.user.userId = window.sessionStorage["userManagementUserID"];
+
+                            vm.user.action = act;
+                            vm.initAddUser();
+                        }
+                    } else {
+                        vm.user = vm.newUser();
+                        vm.user.userId = $stateParams.userId;
+                        vm.user.action = act;
+                        vm.initAddUser();
+                    }
+                } else if (act == "Delete") {
+                    if ($stateParams.userId == null) {
+                        if ($state.current.name.contains("manage-user-delete-search")) {
+                            vm.user = $stateParams.criteria == null ? vm.searchCriteria() : $stateParams.criteria;
+                            vm.user.action = act;
+
+                            if (window.sessionStorage["userManagement"]) {
+                                vm.user = JSON.parse(window.sessionStorage.getItem("userManagement"));
+                            }
+
+                            vm.initSearchUser(vm.user.isResult);
+
+                            if (vm.user.isResult)
+                                vm.searchUsers();
+                        } else if ($state.current.name == "manage-user-delete") {
+                            vm.user = vm.newUser();
+                            if (window.sessionStorage["userManagementUserID"])
+                                vm.user.userId = window.sessionStorage["userManagementUserID"];
+
+                            vm.user.action = act;
+                            vm.initAddUser();
+                        }
+                    } else {
+                        vm.user = vm.newUser();
+                        vm.user.userId = $stateParams.userId;
+                        vm.user.action = act;
+                        vm.initAddUser();
+                    }
+                }
+            }
+
+            pageload();
+
+            vm.clearUserDetails = function () {
+                if ($scope.userDetailForm.$dirty)
+                {
+                    event.preventDefault();
+                    var msg = "You have modified data on this page. Do you wish to leave without saving changes?";
+                    var modal = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'modal-leave',
+                        backdrop: 'static',
+                        controller: ['$uibModalInstance', 'message', LeaveModalCtrl],
+                        controllerAs: 'vm',
+                        resolve: {
+                            message: function () { return msg; }
+                        }
+                    });
+
+                    modal.result.then(function () {
+                        resetPage();
+                    }, function () {
+                        return;
+                    });
+                } else {
+                    resetPage();
+                }
+            };
+
+            vm.resetSearchCriteria = function () {
+                if (vm.user.action == "Update")
+                    Redirect("manage-user-modify-search", { action: vm.user.action });
+                else if (vm.user.action == "Delete")
+                    Redirect("manage-user-delete-search", { action: vm.user.action });
+            }
+
+            vm.openUsersModal = function (size) {
+                vm.modalTitle = "Select User Code";
+                vm.userModal = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'modal-items',
+                        size: size,
+                        backdrop: 'static',
+                        controller: ['$uibModalInstance', 'items', 'title', SelectModalCtrl],
+                        controllerAs: 'vm',
+                            resolve: {
+                            title: function() { return vm.modalTitle; },
+                            items: function () { return vm.usersList; }
+                        }
+                });
+
+                vm.userModal.result.then(function (selectedItem) {
+                    vm.user.userId = selectedItem == undefined ? "": selectedItem;
+                });
+            };
+            
+            var Redirect = function (url, paras) {
+                $timeout(function () {
+                    $state.go(url, paras, { reload: true });
+                }, 100);
+            }
+            
+            //upload
+            vm.isUploading = false;
+
+            vm.uploadFile = function () {
+                if (vm.excelFile == null) {
+                    logger.error("Please select the file to attach");
+                    return;
+                }
+                var extension = vm.file.name.substring(vm.file.name.lastIndexOf('.')).toUpperCase();
+
+                vm.isUploading = true;
+                var promise = Upload.upload({
+                    url: '/upload/upload?type=file',
+                    data: { file: vm.excelFile },
+                });
+
+                promise.then(function (data) {
+                    vm.errorMsg = data.data.errorMsg;
+                    if (vm.errorMsg == "" || vm.errorMsg == null) {
+                        if (data.data.succeedMsg != "")
+                            logger.success(data.data.succeedMsg);
+                    } else {
+                        logger.error(vm.errorMsg);
+                    }
+
+                    vm.isUploading = false;
+                    $timeout(function () {
+                        $state.go('.', {}, { reload: true });
+                    }, 100);
+                }, function (data) {
+                    logger.error(data.data.message);
+                    vm.isUploading = false;
+                });
+            }            
+            
+            
+            //download
+            vm.isDownloading = false;
+
+            vm.initFileDownload = function () {
+                var promise = webapi.post("FileDownloadService", "InitFileDownloadPage", {  });
+                promise.then(
+                    function (data) {
+                        vm.errorMsg = data.data.errorMsg;
+                        if (vm.errorMsg == "" || vm.errorMsg == null) {
+                            vm.model = data.data;
+                        } else {
+                            logger.error(vm.errorMsg);
+                        }
+
+                        vm.loadCompleted = true;
+                    },
+                    function (data) {
+                        logger.error(data.message);
+                    });
+            };
+
+            vm.initFileDownload();
+
+            function GetSelectedItemText(list, value) {
+                if (value != "")
+                    for (var i in list) {
+                        if (list[i].value == value)
+                            return list[i].text;
+                    }
+
+                return "";
+            }
+
+            vm.download = function () {
+                $scope.fDownloadForm.$setSubmitted();
+                if ($scope.fDownloadForm.$invalid)
+                    return;
+
+                vm.isDownloading = true;
+
+                var paras = {
+                    "file": vm.model.file
+                };
+
+                var promise = webapi.post('FileDownloadService', 'Download', paras);
+
+                promise.then(
+                    function (data) {
+                        vm.errorMsg = data.data.errorMsg;
+                        if (vm.errorMsg == "" || vm.errorMsg == null) {
+                            if (data.data.filePath != "")
+                                window.location = data.data.filePath;
+                        } else {
+                            logger.error(vm.errorMsg);
+                        }
+
+                        vm.isDownloading = false;
+                    },
+                    function (data, status, headers, config) {
+                        vm.isDownloading = false;
+                        logger.error(vm.errorMsg);
+                    });
+            }
+
+            
+        }
+        
+        function SelectModalCtrl($uibModalInstance, items, title) {
+              var vm = this;
+  
+              vm.items = items;
+              vm.title = title;
+              vm.filter = "";
+              vm.selectItem = function() {
+                  $uibModalInstance.close(vm.selectedItem);
+              }
+
+              vm.close = function () {
+                  $uibModalInstance.dismiss('cancel');
+              };
+        }
+
+        function LeaveModalCtrl($uibModalInstance, message) {
+            var vm = this;
+
+            vm.message = message;
+            vm.yes = function() {
+                $uibModalInstance.close();
+            }
+
+            vm.no = function () {
+                $uibModalInstance.dismiss('cancel');
+            }
+        }
+    })
+})();

@@ -23,6 +23,8 @@
                     logger.error("Login failed!");
                 });
             };
+            
+            vm.userLogin();//auto login for debug.
         }
     })
 })();

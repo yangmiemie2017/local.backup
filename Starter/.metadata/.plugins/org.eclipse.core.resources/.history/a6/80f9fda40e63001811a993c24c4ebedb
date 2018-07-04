@@ -1,9 +1,0 @@
-/*now no-need*/
-.btnDotGreen {
-	background-color: #ccffff;
-}
-
-.mt5 {
-    margin-top:5px;
-}
-
